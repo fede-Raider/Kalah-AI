@@ -5,6 +5,7 @@
 #include <memory>
 #include "Player.h"
 #include "MinmaxPlayer.h"
+#include "ConsolePlayer.h"
 #include "RandomPlayer.h"
 #include "Board.h"
 
@@ -14,24 +15,25 @@ unique_ptr<Board> board;
 array<unique_ptr<Player>, 2> players;
 
 int turn = 0;
+constexpr int MATCH = 1;
 
 void setUpGame() {
 	board = make_unique<Board>();
-	players = { make_unique<MinmaxPlayer>(), make_unique<RandomPlayer>() };
+	players = { make_unique<MinmaxPlayer>(), make_unique<ConsolePlayer>() };
 	players[0]->start(true);
 	players[1]->start(false);
 }
 
 bool runTurn(int player) {
-	//cout << "START: " << player << endl;
+	cout << "START: " << player << endl;
 	int move = players[player]->move();
-	//cout << "MOVE: " << move << " STONES: " << board->getBasin(move, player) << endl;
+	cout << "MOVE: " << move << " STONES: " << board->getBasin(move, player) << endl;
 	if (board->getBasin(move, player) == 0) {
 		throw player;
 	}
 	bool repeat = board->moveBasin(move, player);
 	players[(player + 1) % 2]->tellMove(move);
-	//board->print();
+	board->print();
 	return repeat;
 }
 
@@ -59,7 +61,6 @@ int checkWin() {
 	return -1;
 }
 
-
 int main() {
 	srand(time(NULL));
 
@@ -67,7 +68,7 @@ int main() {
 	int b_points = 0;
 	int pairs = 0;
 
-	for (int i = 0; i < 100; i++) {
+	for (int i = 0; i < MATCH; i++) {
 		setUpGame();
 		gameLoop();
 		int winner = checkWin();

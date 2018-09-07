@@ -1,2 +1,3 @@
-﻿  MinmaxPlayer.cpp
+﻿  Main.cpp
+c:\users\fedei\documents\visual studio 2017\projects\kalah\kalah\main.cpp(65): warning C4244: 'argomento': conversione da 'time_t' a 'unsigned int'. Possibile perdita di dati.
   Kalah.vcxproj -> C:\Users\fedei\Documents\Visual Studio 2017\Projects\Kalah\Debug\Kalah.exe
